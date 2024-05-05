@@ -17,9 +17,10 @@
 | Teslim Olayiwola | PhD candidate, Louisiana State University | tolayi1@lsu.edu |
 
 ## Plan
-Implement different AL Query strategies on
-- [x] Protein adsorption on polymer brushes: (possibly increase performance while using small data)
-- [] Electrochemical separation with large missing data (resolve missing data issues)
+Implement different AL Query strategies to possibly increase performance while using small data\resolve missing data issues on
+- [x] [Protein adsorption](https://pubs.acs.org/doi/10.1021/acsami.4c01401) on polymer brushes
+- [] [Material informatics](https://pubs.acs.org/doi/full/10.1021/acs.jpcb.1c05264) for property predictions
+- [] [Electrochemical separation](https://chemrxiv.org/engage/chemrxiv/article-details/6609a5619138d23161d5830e) with large missing data.
 
 ## References
 Active Learning (img): https://www.linkedin.com/feed/update/urn:li:activity:7192594281209999360?utm_source=share&utm_medium=member_desktop \
