@@ -46,10 +46,6 @@ class Data:
     def get_test_data(self):
         '''return the test data'''
         return self.handler(self.X_test, self.y_test)
-    
-    def cal_test_acc(self, preds):
-        '''calculate the test accuracy'''
-        return r2_score(self.y_test, preds) #.detach().numpy())
 
 # dataset handler
 class Handler(Dataset):
