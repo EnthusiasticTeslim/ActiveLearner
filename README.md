@@ -20,5 +20,5 @@
 Apply the knowlegde from AL to electrochemical separation
 
 ### References
-Active Learning image: https://www.linkedin.com/feed/update/urn:li:activity:7192594281209999360?utm_source=share&utm_medium=member_desktop
+Active Learning (img): https://www.linkedin.com/feed/update/urn:li:activity:7192594281209999360?utm_source=share&utm_medium=member_desktop \
 Query strategies: https://github.com/ej0cl6/deep-active-learning/tree/master/query_strategies
