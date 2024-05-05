@@ -11,14 +11,16 @@
 </table>
 
 
-### Author
+## Author
 | Name | Title/Affilation | Email |
 | :-- | :-- | :-- |
 | Teslim Olayiwola | PhD candidate, Louisiana State University | tolayi1@lsu.edu |
 
-### Plan
-Apply the knowlegde from AL to electrochemical separation
+## Plan
+Implement different AL Query strategies on
+- [x] Protein adsorption on polymer brushes: (possibly increase performance while using small data)
+- [] Electrochemical separation with large missing data (resolve missing data issues)
 
-### References
+## References
 Active Learning (img): https://www.linkedin.com/feed/update/urn:li:activity:7192594281209999360?utm_source=share&utm_medium=member_desktop \
 Query strategies: https://github.com/ej0cl6/deep-active-learning/tree/master/query_strategies
