@@ -7,3 +7,5 @@ __pycache__
 */__pycache__
 *~$*
 *.DS_Store
+notebooks/junks.ipynb
+notebooks/PolymerOthers.ipynb

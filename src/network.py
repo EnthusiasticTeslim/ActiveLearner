@@ -57,9 +57,9 @@ class Net:
         embeddings = torch.zeros([len(data), self.reg.get_embedding_dim()])
         loader = DataLoader(data, shuffle=False, **self.params['test'])
         with torch.no_grad():
-            for x, y, idxs in loader:
-                x, y = x.to(self.device), y.to(self.device)
-                _, e1 = self.clf(x)
+            for input, target, idxs in loader:
+                input, target = input.float().to(self.device), target.float().to(self.device)
+                _, e1 = self.reg(input)
                 embeddings[idxs] = e1.cpu()
         return embeddings
 
@@ -67,10 +67,11 @@ class Net:
 class Regressor(nn.Module):
     def __init__(self, input_dim=1, n_hidden_size=10):
         super(Regressor, self).__init__()
-        self.fc1 = nn.Linear(input_dim, n_hidden_size)
-        self.fc2 = nn.Linear(n_hidden_size, n_hidden_size)
-        self.fc3 = nn.Linear(n_hidden_size, int(n_hidden_size/2))
-        self.fc4 = nn.Linear(int(n_hidden_size/2), 1)
+        self.n_hidden_size = n_hidden_size
+        self.fc1 = nn.Linear(input_dim, self.n_hidden_size)
+        self.fc2 = nn.Linear(self.n_hidden_size, self.n_hidden_size)
+        self.fc3 = nn.Linear(self.n_hidden_size, int(self.n_hidden_size/2))
+        self.fc4 = nn.Linear(int(self.n_hidden_size/2), 1)
 
     def forward(self, x):
         x = F.relu(self.fc1(x))
@@ -80,4 +81,4 @@ class Regressor(nn.Module):
         return out, x
     
     def get_embedding_dim(self):
-        return 30
+        return int(self.n_hidden_size/2)

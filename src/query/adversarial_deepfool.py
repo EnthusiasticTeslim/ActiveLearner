@@ -14,7 +14,7 @@ class AdversarialDeepFool(Strategy):
         nx.requires_grad_()
         eta = torch.zeros(nx.shape)
 
-        out, e1 = self.net.clf(nx+eta)
+        out, e1 = self.net.reg(nx+eta)
         n_class = out.shape[1]
         py = out.max(1)[1].item()
         ny = out.max(1)[1].item()
@@ -45,7 +45,7 @@ class AdversarialDeepFool(Strategy):
 
             eta += ri.clone()
             nx.grad.data.zero_()
-            out, e1 = self.net.clf(nx+eta)
+            out, e1 = self.net.reg(nx+eta)
             py = out.max(1)[1].item()
             i_iter += 1
 
@@ -54,15 +54,15 @@ class AdversarialDeepFool(Strategy):
     def query(self, n):
         unlabeled_idxs, unlabeled_data = self.dataset.get_unlabeled_data()
 
-        self.net.clf.cpu()
-        self.net.clf.eval()
+        self.net.reg.cpu()
+        self.net.reg.eval()
         dis = np.zeros(unlabeled_idxs.shape)
 
         for i in tqdm(range(len(unlabeled_idxs)), ncols=100):
             x, y, idx = unlabeled_data[i]
             dis[i] = self.cal_dis(x)
 
-        self.net.clf.cuda()
+        #self.net.reg.cuda()
 
         return unlabeled_idxs[dis.argsort()[:n]]
 
