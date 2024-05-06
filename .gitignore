@@ -1,10 +1,5 @@
 # Files
-src/query/entropy_sampling_dropout*
-src/query/entropy_sampling*
-src/query/least_confidence*
-src/query/marginal_sampling*
-src/query/bayesian_active_learning*
-src/query/adversarial_bim.py
+*junks*
 # Extensions
 .DS_Store
 */.DS_Store
