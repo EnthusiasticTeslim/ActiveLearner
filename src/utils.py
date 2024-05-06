@@ -22,24 +22,24 @@ def evs(dd):
     return explained_variance_score(unraveled(dd[1]), unraveled(dd[0]))
 
 # show model crossplot
-def plot_data(preds_train, preds_test, data, target_col):
+def plot_data(train, test, data, target_col, fig_size=(3,2)):
     ''' preds_train and preds_test are tuples of predicted and true values
     return plot of the train and test data with the 45 degree line'''
-    plt.figure(figsize=(3, 2), dpi=200)
-    plt.scatter(unraveled(preds_train[1]), unraveled(preds_train[0]), label=r'$\rm train$', alpha=0.7)
-    plt.scatter(unraveled(preds_test[1]), unraveled(preds_test[0]), label=r'$\rm test$', alpha=0.7)
+    plt.figure(figsize=fig_size, dpi=200)
+    plt.scatter(unraveled(train[1]), unraveled(train[0]), label=r'$\rm train$', alpha=0.7)
+    plt.scatter(unraveled(test[1]), unraveled(test[0]), label=r'$\rm test$', alpha=0.7)
     # plot 45 degree line, get max and min values
     plt.plot([min(data[target_col]), max(data[target_col])], [min(data[target_col]), max(data[target_col])], color='red')
-    plt.xlabel(r'$\rm True \ Protein \ Ads. (mg/cm^2)$', fontsize=8)
-    plt.ylabel(r'$\rm Pred \ Protein \ Ads. (mg/cm^2)$', fontsize=8)
+    plt.xlabel(r'$\rm Ground \ Truth$')
+    plt.ylabel(r'$\rm Predictions$')
 
-def show_performance(preds_train, preds_test): 
+def show_performance(train, test, fig_size=(6, 3), method='AL', save_fig: bool = False): 
     ''' preds_train and preds_test are tuples of predicted and true values
     return (1) plot of the train and test data with the 45 degree line
             (2) histogram of residuals for train and test data'''
-    fig, axs = plt.subplots(1, 2, figsize=(6, 3), dpi=200)
-    axs[0].scatter(unraveled(preds_train[1]), unraveled(preds_train[0]), color='red', label=r'$\rm train$', alpha=0.7)
-    axs[0].scatter(unraveled(preds_test[1]), unraveled(preds_test[0]), color='green', label=r'$\rm test$', alpha=0.7)
+    fig, axs = plt.subplots(1, 2, figsize=fig_size, dpi=200)
+    axs[0].scatter(unraveled(train[1]), unraveled(train[0]), color='red', label=r'$\rm train$', alpha=0.7)
+    axs[0].scatter(unraveled(test[1]), unraveled(test[0]), color='green', label=r'$\rm test$', alpha=0.7)
     # plot 45 degree line, get max and min values
     axs[0].plot([-50, 450], [-50, 450], color='black')
     axs[0].set_xlabel(r'$\rm Ground \ Truth $')
@@ -50,13 +50,16 @@ def show_performance(preds_train, preds_test):
     axs[0].legend(frameon=False)
 
     # plot histogram of residuals
-    axs[1].hist(unraveled(preds_train[1]) - unraveled(preds_train[0]), bins=50, alpha=0.7, color='red')
-    axs[1].hist(unraveled(preds_test[1]) - unraveled(preds_test[0]), bins=50, alpha=0.7, color='green')
+    axs[1].hist(unraveled(train[1]) - unraveled(train[0]), bins=50, alpha=0.7, color='red')
+    axs[1].hist(unraveled(test[1]) - unraveled(test[0]), bins=50, alpha=0.7, color='green')
     axs[1].set_xlabel(r'$\rm Residuals$')
     axs[1].set_ylabel(r'$\rm Frequency$')
     axs[1].legend([r'$\rm train$', r'$\rm test$'], frameon=False)
 
     plt.tight_layout()
+
+    if save_fig:
+        fig.savefig(f'../reports/images/{method}_performance.png', dpi=200)
 
 def plot_heat_map(data: pd.DataFrame = None, fig_size = (10, 5), save_fig: bool = False):
     ''' Plot the heatmap of the correlation matrix of the data  '''
@@ -67,6 +70,8 @@ def plot_heat_map(data: pd.DataFrame = None, fig_size = (10, 5), save_fig: bool 
     sns.heatmap(data.corr(method='pearson'), cmap='coolwarm', annot=True, fmt='.2f', linewidths=.5, ax=ax, cbar=False)
     # Show the plot
     plt.show()
+    if save_fig:
+        fig.savefig('../reports/images/heatmap.png', dpi=200)
 
 
 def runAL(strategy, dataset, n_round: int = 10, n_query:int = 8):
